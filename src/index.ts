@@ -15,7 +15,7 @@ const io=new Server(server,{cors:{origin:""}});
 
 app.use(express.json());       
 app.use(cookieParser());            
-app.use(router);               
+app.use("/api/v1",router);               
 app.use(errorHandler);          
 
 

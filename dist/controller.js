@@ -19,6 +19,7 @@ const db_1 = require("./db");
 const entities_1 = require("./entities");
 const node_cache_1 = __importDefault(require("node-cache"));
 const cache = new node_cache_1.default({ stdTTL: 300 });
+/////////////////////////auth////////////////////////////////////////////////////////
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password } = req.body;
@@ -55,7 +56,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         user.sessionToken = null;
         yield userRepository.save(user);
-        const sessionToken = jsonwebtoken_1.default.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "2m" });
+        const sessionToken = jsonwebtoken_1.default.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1m" });
         user.sessionToken = sessionToken;
         yield userRepository.save(user);
         res.cookie("token", sessionToken, {
@@ -86,6 +87,7 @@ const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.logout = logout;
+////////////////////////////////////product///////////////////////////////////////////
 const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, price, description } = req.body;
@@ -107,6 +109,7 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.addProduct = addProduct;
 const getAllproducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log("test");
         const cachedData = cache.get("products");
         if (cachedData) {
             res.status(200).json({ data: cachedData, cached: true });

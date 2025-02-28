@@ -18,7 +18,7 @@ const server = http_1.default.createServer(app);
 const io = new socket_io_1.Server(server, { cors: { origin: "" } });
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
-app.use(authRouter_1.default);
+app.use("/api/v1", authRouter_1.default);
 app.use(errorhandllingMiddleware_1.default);
 db_1.AppDataSource.initialize()
     .then(() => console.log("database connected"))

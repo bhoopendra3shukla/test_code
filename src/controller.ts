@@ -6,6 +6,7 @@ import { Product, User } from "./entities";
 import NodeCache from "node-cache";
 const cache = new NodeCache({ stdTTL: 300 });
 
+/////////////////////////auth////////////////////////////////////////////////////////
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
     try {
         const { email, password } = req.body;
@@ -28,6 +29,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
         res.status(500).json({ message: "Internal server error", error });
     }
 }
+
 export const login = async (req: Request, res: Response): Promise<void> => {
     try {
         const { email, password } = req.body;
@@ -50,7 +52,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         await userRepository.save(user);
 
       
-        const sessionToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET!, { expiresIn: "2m" });
+        const sessionToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET!, { expiresIn: "1m" });
 
       
         user.sessionToken = sessionToken;
@@ -70,7 +72,6 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-
 export const logout = async (req: Request, res: Response): Promise<void> => {
     try {
         res.clearCookie("token", {
@@ -86,6 +87,8 @@ export const logout = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
+
+////////////////////////////////////product///////////////////////////////////////////
 export const addProduct = async (req: Request, res: Response): Promise<void> => {
     try {
         const { name, price, description } = req.body;
@@ -110,7 +113,7 @@ export const addProduct = async (req: Request, res: Response): Promise<void> => 
 
 export const getAllproducts = async (req: Request, res: Response): Promise<void> => {
     try {
-
+        console.log("test")
         const cachedData = cache.get("products");
         if (cachedData){
             res.status(200).json({ data: cachedData, cached: true });
