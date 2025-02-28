@@ -21,7 +21,7 @@ app.use(errorHandler);
 
 AppDataSource.initialize()
 .then(()=>console.log("database connected"))
-.catch((err)=>console.log("dayabase connection error",err))
+.catch((err)=>console.log("database connection error",err))
 
 io.on("connection", (socket) => {
     console.log("New client connected:", socket.id);
