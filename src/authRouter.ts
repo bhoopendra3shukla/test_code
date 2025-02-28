@@ -3,6 +3,8 @@ const router=Router();
 import { registerUser,login,logout,addProduct,getAllproducts,getProductById} from "./controller";
 import { validateRegister, validateLogin} from "./validator";
 import sessionMiddleware from "./sessionMiddleware";
+
+//User Routes
 router.post("/register",validateRegister,registerUser);
 router.post("/login",validateLogin,login);
 router.post("/logout",logout)
